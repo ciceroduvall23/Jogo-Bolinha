@@ -1,28 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        //variáveis do jogo
-        var canvas,ctx, ALTURA,LARGURA, frames = 0;
+            //variáveis do jogo
+            var canvas,ctx, ALTURA,LARGURA, frames = 0,
 
-        function clique() {}
-        function main() {
-        ALTURA = window.innerHeight;
-        LARGURA =
+            //variavel chão
+            chao = {
+            y:550,
+            altura:50,
+            cor:"#ffdf70",
+             desenha:function(){
+              ctx.fillStyle= this.cor;
+              ctx.fillRect(0,this.y,LARGURA, this.altura);
 
-        } 
-        function roda() {}
-        function atualiza() {}
+             },
 
-        //inicializa o jogo
-        main();
+             // criar bloco
+      bloco = {
+          x:50,
+          y:0,
+          altura:50,
+          altura:50,
+          cor:"#ff4e4e",
+
+          //método do bloco
+          desenha:function(){
+              ctx.fillStyle = this.cor;
+              ctx.fillRect(this.x, this.y,this.largura,this.altura)
+          }
+      }
+
+
+            };
+
+            function clique() {}
+            function main() {
+            ALTURA = window.innerHeight;
+            // LARGURA =
+
+            // }
+            function roda() {}
+            function atualiza() {}
+
+         function desenha() {
+             ctx.fillStyle = "#50beff";
+             ctx.fillRect(0,0,LARGURA,ALTURA)
+             //desenhando o chão
+             chao.desenha;
+             //desenhando o bloco
+             bloco.desenha;
+         }
+            //inicializa o jogo
+            main();
     </script>
-    
-</body>
+  </body>
 </html>
