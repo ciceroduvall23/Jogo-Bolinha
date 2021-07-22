@@ -1,28 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      margin: auto;
+
+    }
+  </style>
 </head>
+
 <body>
-    <script>
-        //variáveis do jogo
-        var canvas,ctx, ALTURA,LARGURA, frames = 0;
+  <script>
+    //variáveis do jogo
+    var canvas, ctx, ALTURA, LARGURA, frames = 0, maxPulos = 3,
 
-        function clique() {}
-        function main() {
-        ALTURA = window.innerHeight;
-        LARGURA =
+      //criação do chão do jogo
+      chao = {
+        y: 550,
+        altura: 50,
+        cor: "#ffdf70",
+        desenha: function () {
+          ctx.fillStyle = this.cor;
+          ctx.fillRect(0, this.y, LARGURA, this.altura);
+        }
+      },
+      bloco = {
+        x: 50,
+        y: 0,
+        altura: 50,
+        largura: 50,
+        cor: "#ff4e4e",
+        gravidade: 2.5,
+        velocidade: 0,
+        forcaDoPulo: 15,
+        qntPulos: 0,
 
-        } 
-        function roda() {}
-        function atualiza() {}
+        atualiza: function () {
+          this.velocidade += this.gravidade;
+          this.y += this.velocidade;
 
-        //inicializa o jogo
-        main();
-    </script>
-    
+          if (this.y > chao.y - this.altura) {
+            this.y = chao.y - this.altura;
+            this.qntPulos = 0;
+          }
+        },
+
+        pula: function () {
+          if (this.qntPulos < maxPulos) {
+            this.velocidade = - this.forcaDoPulo;
+            this.qntPulo++;
+          }
+        },
+
+        desenha: function () {
+          ctx.fillStyle = this.cor;
+          ctx.fillRect(this.x, this.y, this.altura, this.largura)
+        }
+      };
+
+    function clique(event) {
+      bloco.pula();
+
+
+    }
+    function main() {
+      ALTURA = window.innerHeight;
+      LARGURA = window.innerWidth;
+      if (LARGURA >= 500) {
+        LARGURA = 600;
+        ALTURA = 600;
+      }
+      canvas = document.createElement("canvas");
+      canvas.width = LARGURA;
+      canvas.height = ALTURA;
+      canvas.style.border = "1px solid #000";
+
+      ctx = canvas.getContext("2d");
+      document.body.appendChild(canvas);
+
+      document.addEventListener("mousedown", clique);
+
+      roda();
+    }
+
+    function roda() {
+      atualiza();
+      desenha();
+
+      window.requestAnimationFrame(roda);
+    }
+    function atualiza() {
+      frames++;
+      bloco.atualiza();
+    }
+    function desenha() {
+      ctx.fillStyle = "#50beff";
+      ctx.fillRect(0, 0, LARGURA, ALTURA);
+      //desenhando o chão do jogo
+      chao.desenha();
+      //desenhando o bloco
+      bloco.desenha();
+
+
+    }
+
+    //inicializa o jogo
+    main();
+  </script>
+
 </body>
+
 </html>
