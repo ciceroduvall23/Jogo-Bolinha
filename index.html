@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
+
     canvas {
       position: absolute;
       top: 0px;
@@ -39,7 +40,7 @@
         y: 0,
         altura: 50,
         largura: 50,
-        cor: "#ff4e4e",
+        cor: "#B22222",
         gravidade: 2.5,
         velocidade: 0,
         forcaDoPulo: 15,
@@ -67,7 +68,30 @@
           ctx.fillRect(this.x, this.y, this.altura, this.largura)
         }
       };
+      obstaculos = {
+        _obs: [],
+        cores: ["#ff4e4e"],
+        insere: function(){
+          this._obs.push({
+             x: 200,
+             largura:30 + Math.floor(21 * Math.random()),
+             altura: 30 + Math.floor(120 * Math.random()), 
+             cor:this.cores[Math.floor(5 * Math.random())]
+          });
 
+        },
+        atualiza: function(){
+
+        }, 
+        desenha: function(){
+         for (var i = 0, tam = this._obs.length; i < tam; i++){
+              var obs = this._obs[i];
+              ctx.fillStyle = obs.cor;
+              ctx.fillRect(obs.x, chao.y - obs.altura, obs.largura, obs.altura);
+         }
+        }
+      };   
+       
     function clique(event) {
       bloco.pula();
 
@@ -108,6 +132,9 @@
       ctx.fillRect(0, 0, LARGURA, ALTURA);
       //desenhando o chão do jogo
       chao.desenha();
+
+      obstaculos.desenha(); //chamando a função obstaculos
+
       //desenhando o bloco
       bloco.desenha();
 
